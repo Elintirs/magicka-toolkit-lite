@@ -4,6 +4,9 @@
 ни лечения, ни техник, ни песочницы, ни арены, ни редактора. Эти перехваты в этой сборке даже не ставятся, и
 включить их из `settings.ini` нельзя.
 
+Установщик ставит **и Community Patch 0.0.60** (из его официального релиза на GitHub), и сам тулкит — чтобы
+сборки у всех игроков совпадали и кооператив подключался.
+
 ## Что умеет
 
 | Раздел (F2) | Что делает |
@@ -24,26 +27,44 @@
 
 ## Установка
 
-Самый простой способ — одна команда в PowerShell (находит игру, скачивает и распаковывает сама; если игра в
-`Program Files`, попросит права администратора и перезапустится):
+Самый простой способ — одна команда в PowerShell (находит игру, ставит Community Patch 0.0.60, скачивает и
+распаковывает тулкит; если игра в `Program Files`, попросит права администратора и перезапустится):
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (irm 'https://raw.githubusercontent.com/Elintirs/magicka-toolkit-lite/main/install.ps1')"
 ```
 
-Вручную:
+Повторный запуск этой же команды — обновление (и патча, и тулкита).
+
+Что делает установщик:
+
+1. Находит папку игры (реестр Steam + `libraryfolders.vdf`, иначе спросит).
+2. Проверяет, что игра закрыта.
+3. Ставит **Community Patch 0.0.60** из официального релиза
+   ([Alexander-Aue-Johr/magicka-patch](https://github.com/Alexander-Aue-Johr/magicka-patch)): `Magicka.exe`,
+   `PolygonHead.dll`, `Magicka.GcDiagnostics.dll`, `CommunityPatch\GcDiagnostics`; оригиналы один раз
+   сохраняются в `MagickaToolkit\backup`; `Magicka.exe` получает флаг Large Address Aware; телеметрия и
+   автообновление в `patch-settings.ini` выключаются, чтобы версия осталась 0.0.60.
+4. Ставит чистую сборку тулкита в `MagickaToolkit`.
+
+Важно: не запускай в Steam «Проверить целостность файлов» — она вернёт старый `Magicka.exe` и снесёт патч
+(после этого просто запусти установщик снова).
+
+Вручную (без скрипта):
 
 1. Закрой Magicka.
-2. Скопируй папку **`MagickaToolkit`** из этого архива в папку игры — туда, где лежит `Magicka.exe`
+2. Поставь Community Patch 0.0.60 из его релизов: `Magicka.exe`, `PolygonHead.dll`, `Magicka.GcDiagnostics.dll`
+   в папку игры, `gc-diagnostics` → `CommunityPatch\GcDiagnostics`. Оригиналы сохрани на случай отката.
+3. Скопируй папку **`MagickaToolkit`** из этого архива в папку игры — туда, где лежит `Magicka.exe`
    (обычно `C:\Program Files (x86)\Steam\steamapps\common\Magicka`).
-3. В Steam: Magicka → Свойства → Параметры запуска:
+4. В Steam: Magicka → Свойства → Параметры запуска:
 
    ```
    "C:\Program Files (x86)\Steam\steamapps\common\Magicka\MagickaToolkit\launch.exe" %command%
    ```
 
    (подставь свой путь). Либо просто запускай `launch.exe` из папки `MagickaToolkit` — он сам поднимет игру.
-4. Запусти игру, нажми **F2** — откроется окно.
+5. Запусти игру, нажми **F2** — откроется окно.
 
 Журналы пишутся в `MagickaToolkit\logs` — если что-то не работает, там видно, что именно.
 
