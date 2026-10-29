@@ -1,4 +1,4 @@
-﻿# Magicka Toolkit Lite + Community Patch — установка и обновление одной командой.
+# Magicka Toolkit Lite + Community Patch — установка и обновление одной командой.
 #
 #   powershell -NoProfile -ExecutionPolicy Bypass -Command "iex (irm 'https://raw.githubusercontent.com/Elintirs/magicka-toolkit-lite/main/install.ps1')"
 #
